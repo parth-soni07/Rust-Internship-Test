@@ -54,6 +54,39 @@ fn is_prime(n: u32) -> bool {
 
     true
 }
+fn find_median(mut a: Vec<i32>) -> f64 {
+    let n = a.len();
+    // check for even case
+    if n % 2 != 0 {
+        return a[n / 2] as f64;
+    }
+    (a[(n - 1) / 2] + a[n / 2]) as f64 / 2.0
+}
+fn longest_common_prefix(a: &[String]) -> String {
+    let size = a.len();
+    // if size is 0, return empty string
+    if size == 0 {
+        return String::new();
+    }
+    if size == 1 {
+        return a[0].clone();
+    }
+    // sort the array of strings
+    let mut sorted = a.to_vec();
+    sorted.sort();
+
+    // find the minimum length from first and last string
+    let end = std::cmp::min(sorted[0].len(), sorted[size - 1].len());
+
+    // find the common prefix between the first and last string
+    let mut i = 0;
+    while i < end && sorted[0].chars().nth(i) == sorted[size - 1].chars().nth(i) {
+        i += 1;
+    }
+
+    let pre = sorted[0][..i].to_string();
+    pre
+}
 fn main() {
     // Input string
     let mut str = String::from("geeg");
@@ -72,6 +105,13 @@ fn main() {
     let given_string = "Find the maximum subarray sum Rust";
     let min_word = min_length_word(given_string);
     println!("03 - Minimum length word: {}", min_word);
+    //04
     let prime_number1 = 114;
     println!("04 - Is {} prime ? Answer: {}", prime_number1, is_prime(prime_number1));
+    //05
+    let sorted_array = vec![3, 1, 5, 4, 2]; // Example array
+    println!("05 - Median of the array is {}", find_median(sorted_array));
+    //06
+    let string_set = vec!["flower".to_string(), "flow".to_string(), "flight".to_string()]; // Example array
+    println!("06 - The Longest common prefix of the given string is : {}", longest_common_prefix(&string_set));
 }
